@@ -73,6 +73,7 @@ To help you with the structure and order of steps to perform in this project, we
 You can follow the following steps:
 
 - If not done already, create a GitHub account
+- If not done already, create a [Kaggle account](https://www.kaggle.com/account/login?phase=startRegisterTab&returnUrl=%2F) (so you can download the dataset)
 - Fork this repository (one person per group)
 - Add the different members of your group as admin to your forked repository
 - For each opened pull request:
