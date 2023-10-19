@@ -65,34 +65,31 @@ The work will be noted on the following criteria:
 
 ## Steps to reproduce to build the deliverable
 
-To help you with the structure and order of steps to perform in this project, we have created different pull requests opened in this repository. You can follow the order of the pull requests to build your project.
+To help you with the structure and order of steps to perform in this project, we have created different templates for pull requests. 
+Each branch in this repository corresponds to a future pull request and has an attached markdown file with the instructions to perform the tasks of the pull request.
+Each branch starts with a number.
+You can follow the order of the branches to build your project and collaborate.
 
 > [!NOTE]
-> There are "TODO" in the code of the pull requests or inside this repository. Each "TODO" corresponds to a task to perform to build the project.
+> There are "TODO" in the code of the different branches. Each "TODO" corresponds to a task to perform to build the project.
 
-You can follow the following steps:
+**You can follow the following steps**:
 
 - If not done already, create a GitHub account
 - If not done already, create a [Kaggle account](https://www.kaggle.com/account/login?phase=startRegisterTab&returnUrl=%2F) (so you can download the dataset)
 - Fork this repository (one person per group)
+
+**WARNING**: make sure to **unselect** the option "Copy the `master` branch only", so you have all the branches in the forked repository.
+
 - Add the different members of your group as admin to your forked repository
-- For each opened pull request:
-  - Do as many commits as necessary to perform the task of the pull request
-  - Merge the pull request in your the main branch of your forked repository
+- Follow the order of the numbered branches and for each branch:
+  - Do as many commits as necessary to perform the task indicated in the corresponding markdown file
+  - Open a pull request from this branch to the main branch of your forked repository
+  - Once done, merge the pull request in your the main branch of your forked repository
 
 ### Pull requests in this project
 
-Github [Pull Requests](https://docs.github.com/articles/about-pull-requests) are a way to propose changes to a repository. They have for purpose to integrate the work of *feature branches* into the main branch of the repository.
-
-Each Pull Request has a number and objectives. Follow the order and associated objectives of the pull requests to build your project.
-Each pull request is associated to a feature branch which contains empty files or files with some code to help you with the task of the pull request. 
-
-Here is the workflow you should follow to build your project:
-
-1. Work on the feature branch corresponding to the current pull request (`git checkout <branch_name>`)
-2. Commit and push your changes (**each person in the group must do at least one commit!**) in as many commits as necessary to perform the task of the pull request
-3. When finished, merge the pull request in the main branch of your forked repository (`master`)
-4. Go to the next pull request and repeat steps 1 to 3
+Github [Pull Requests](https://docs.github.com/articles/about-pull-requests) are a way to propose changes to a repository. They have for purpose to integrate the work of *feature branches* into the main branch of the repository, with a collaborative review process.
 
 
 ### Tips to work on this project
