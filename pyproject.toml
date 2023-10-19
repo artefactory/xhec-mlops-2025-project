@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xhec-mlops-project-student"
+authors = [
+  { name = "username", email = "user@email.com" },
+] # TODO: add authors here
+description = "This repository contains the solution for the X-HEC MLOps Project on the industrialization of Abalone age prediction model."
+version = "0.0.1"
+readme = "README.md"
+requires-python = ">=3.9"
+
+[project.urls]
+"Homepage" = "https://github.com/artefactory/xhec-mlops-project-student" # TODO: update this URL
+
+[tool.setuptools]
+packages = ["src", "config"]
+
+[tool.ruff]
+select = [
+  "E",
+  "W",
+  "F",
+  "I",
+  "N",
+  "D",
+  "ANN",
+  "Q",
+  "RET",
+  "ARG",
+  "PTH",
+  "PD",
+] # See: https://beta.ruff.rs/docs/rules/
+ignore = [
+  "D100",
+  "D101",
+  "D103",
+  "D106",
+  "D203",
+  "D213",
+  "ANN101",
+  "ANN102",
+  "N803",
+  "PTH123",
+  "PD901",
+  "RET504",
+  "N806",
+]
+line-length = 100
+target-version = "py310"
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.direnv
+    | \.eggs
+    | \.git
+    | \.tox
+    | \.venv
+    | _build
+    | build
+    | dist
+    | venv
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
