@@ -86,10 +86,17 @@ You can follow the order of the branches to build your project and collaborate.
 - Add the different members of your group as admin to your forked repository
 - Follow the order of the numbered branches and for each branch:
   - Read the PR_i.md (where i is the number of the branch) file to understand the task to perform
-  - Checkout to the corresponding branch
-  - Do as many commits as necessary to perform the task indicated in the corresponding markdown file
-  - Open a pull request from this branch to the main branch of your forked repository
-  - Once done, merge the pull request in the main branch of your forked repository
+   > [!NOTE]
+   > Dont forget to integrate your work from past branches (except for when working on branch #1 obviously (!))
+   > ```bash
+   > git checkout branch_number_i
+   > git pull origin master
+   > # At this point, you might have a VIM window opening, you can close it using the command ":wq" 
+   > git push
+   > ```
+    - Do as many commits as necessary on the branch_number_i to perform the task indicated in the corresponding markdown file
+    - Open a pull request from this branch to the main branch of your forked repository
+    - Once done, merge the pull request in the main branch of your forked repository
 
 ### Pull requests in this project
 
