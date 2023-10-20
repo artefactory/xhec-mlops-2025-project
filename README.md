@@ -83,9 +83,11 @@ You can follow the order of the branches to build your project and collaborate.
 
 - Add the different members of your group as admin to your forked repository
 - Follow the order of the numbered branches and for each branch:
+  - Read the PR_i.md (where i is the number of the branch) file to understand the task to perform
+  - Checkout to the corresponding branch
   - Do as many commits as necessary to perform the task indicated in the corresponding markdown file
   - Open a pull request from this branch to the main branch of your forked repository
-  - Once done, merge the pull request in your the main branch of your forked repository
+  - Once done, merge the pull request in the main branch of your forked repository
 
 ### Pull requests in this project
 
