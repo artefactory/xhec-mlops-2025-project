@@ -42,17 +42,18 @@ You can download the dataset on the [Kaggle page](https://www.kaggle.com/dataset
 The deliverable of this project is a copy of this repository with the industrialization of the Abalone age prediction model.
 The industrialization takes the form of an API (which runs locally) that can be used to make predictions on new data.
 
-### Notation
+### Evaluation
 
-The work will be noted on the following criteria:
+The work will be graded based on the following criteria:
 
 - **Clarity** and quality of code 
   - good module structure
   - naming conventions
-  - (bonus) docstrings, formatting, type hints
+  - correct docstrings, formatting, type hints (the code should be linted and formatted)
 - **Reproducibility** and clarity of instructions to run the code
   - Having a clear README.md with the steps to reproduce to test the code
   - Having a working docker image with the required features (see bellow)
+  - Having clear instructions to re-create the Python environment
 - Having the following **features** in your project
   - Clear README with:
     - context of the project
@@ -60,8 +61,9 @@ The work will be noted on the following criteria:
   - A working API which can be used to make predictions on new data
     - The API can run on a docker container
     - The API has validation on input data (use Pydantic)
-  - The code to get the trained model and encoder is in a separate module and must reproducible (not necessarily in a docker container)
+  - The code to get the trained model and encoder is in a separate module and must be reproducible (not necessarily in a docker container)
   - The workflows to train the model and to make the inference (prediction of the age of abalone) are in separate modules and use Prefect `flow` and `task` objects
+- Use of *Pull Requests* (see below) to coordinate your collaboration 
 
 ## Steps to reproduce to build the deliverable
 
