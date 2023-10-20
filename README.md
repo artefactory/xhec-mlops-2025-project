@@ -91,6 +91,15 @@ You can follow the order of the branches to build your project and collaborate.
 
 Github [Pull Requests](https://docs.github.com/articles/about-pull-requests) are a way to propose changes to a repository. They have for purpose to integrate the work of *feature branches* into the main branch of the repository, with a collaborative review process.
 
+**PR tips:**
+
+Make sure that you select your own repository when selecting the base repository:
+
+![PR Wrong](assets/PR_wrong.png)
+
+It should rather look like this:
+
+![PR Right](assets/PR_right.png)
 
 ### Tips to work on this project
 
