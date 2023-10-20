@@ -44,13 +44,13 @@ The industrialization takes the form of an API (which runs locally) that can be 
 
 ### Evaluation
 
-The work will be graded based on the following criteria:
+Your work will be graded based on the following criteria:
 
 - **Clarity** and quality of code 
   - good module structure
   - naming conventions
   - correct docstrings, formatting, type hints (the code should be linted and formatted)
-- **Reproducibility** and clarity of instructions to run the code
+- **Reproducibility** and clarity of instructions to run the code (we will actually try to run your code)
   - Having a clear README.md with the steps to reproduce to test the code
   - Having a working docker image with the required features (see bellow)
   - Having clear instructions to re-create the Python environment
@@ -67,7 +67,7 @@ The work will be graded based on the following criteria:
 
 ## Steps to reproduce to build the deliverable
 
-To help you with the structure and order of steps to perform in this project, we have created different templates for pull requests. 
+To help you with the structure and order of steps to perform in this project, we created different pull requests templates. 
 Each branch in this repository corresponds to a future pull request and has an attached markdown file with the instructions to perform the tasks of the pull request.
 Each branch starts with a number.
 You can follow the order of the branches to build your project and collaborate.
@@ -75,7 +75,7 @@ You can follow the order of the branches to build your project and collaborate.
 > [!NOTE]
 > There are "TODO" in the code of the different branches. Each "TODO" corresponds to a task to perform to build the project.
 
-**You can follow the following steps**:
+**Please follow these steps**:
 
 - If not done already, create a GitHub account
 - If not done already, create a [Kaggle account](https://www.kaggle.com/account/login?phase=startRegisterTab&returnUrl=%2F) (so you can download the dataset)
@@ -109,7 +109,7 @@ It should rather look like this:
 
 - Use a virtual environment to install the dependencies of the project (conda or virtualenv for instance)
 
-- Once your virtual environment is activated, install the pre-commit hooks to automatically format your code before each commit:
+- Once your virtual environment is activated, install pre-commit hooks to automatically format your code before each commit:
 
 ```bash
 pip install pre-commit
