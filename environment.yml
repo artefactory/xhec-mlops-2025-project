@@ -1,7 +1,1 @@
-name: x-hec-solution
-channels:
-  - conda-forge
-dependencies:
-  - python=3.10.10
-  - pip=22.3.1
-  - pip-tools==7.3.0
+# TODO - Fill in this file with the necessary dependencies for your project
