@@ -1,1 +1,2 @@
-# TODO - Fill in this file with the necessary dependencies for your project
+# TODO - complete with requirements (pandas, sklearn etc...)
+# Then, execute "pip-compile requirements.in" to generate the file requirements.txt
