@@ -106,8 +106,9 @@ You can follow the order of the branches to build your project and collaborate.
    > # At this point, you might have a VIM window opening, you can close it using the command ":wq" 
    > git push
    > ```
+    - Read and **follow** all the instructions in the the PR instructions file
     - Do as many commits as necessary on the branch_number_i to perform the task indicated in the corresponding markdown file
-    - Open a pull request from this branch to the main branch of your forked repository
+    - Open **A SINGLE** pull request from this branch to the main branch of your forked repository
     - Once done, merge the pull request in the main branch of your forked repository
 
 ### Pull requests in this project
