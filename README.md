@@ -28,9 +28,9 @@ You can download the dataset on the [Kaggle page](https://www.kaggle.com/dataset
 
 - [xhec-mlops-project-student](#xhec-mlops-project-student)
   - [Table of Contents](#table-of-contents)
-  - [Deliverables and notation](#deliverables-and-notation)
+  - [Deliverables and Evaluation](#deliverables-and-evaluation)
     - [Deliverables](#deliverables)
-    - [Notation](#notation)
+    - [Evaluation](#evaluation)
   - [Steps to reproduce to build the deliverable](#steps-to-reproduce-to-build-the-deliverable)
     - [Pull requests in this project](#pull-requests-in-this-project)
     - [Tips to work on this project](#tips-to-work-on-this-project)
@@ -39,30 +39,40 @@ You can download the dataset on the [Kaggle page](https://www.kaggle.com/dataset
 
 ### Deliverables
 
-The deliverable of this project is a copy of this repository with the industrialization of the Abalone age prediction model.
-The industrialization takes the form of an API (which runs locally) that can be used to make predictions on new data.
+The deliverable of this project is a copy of this repository with the industrialization of the Abalone age prediction model. We expect to see: 
 
-### Evaluation
-
-Your work will be graded based on the following criteria:
-
-- **Clarity** and quality of code 
-  - good module structure
-  - naming conventions
-  - correct docstrings, formatting, type hints (the code should be linted and formatted)
-- **Reproducibility** and clarity of instructions to run the code (we will actually try to run your code)
-  - Having a clear README.md with the steps to reproduce to test the code
-  - Having a working docker image with the required features (see bellow)
-  - Having clear instructions to re-create the Python environment
-- Having the following **features** in your project
-  - Clear README with:
-    - context of the project
-    - clear steps to reproduce to run the code
+1. a workflow to train a model using Prefect
+- The workflows to train the model and to make the inference (prediction of the age of abalone) are in separate modules and use Prefect `flow` and `task` objects
+- The code to get the trained model and encoder is in a separate module and must be reproducible (not necessarily in a docker container)
+2. a Prefect deployment to retrain the model regularly
+3. an API that runs on a local app and that allows users to make predictions on new data
   - A working API which can be used to make predictions on new data
     - The API can run on a docker container
     - The API has validation on input data (use Pydantic)
-  - The code to get the trained model and encoder is in a separate module and must be reproducible (not necessarily in a docker container)
-  - The workflows to train the model and to make the inference (prediction of the age of abalone) are in separate modules and use Prefect `flow` and `task` objects
+
+### Evaluation
+
+Each of your pull requests will be graded based on the following criteria:
+
+- **Clarity** and quality of code
+  - good module structure
+  - naming conventions
+  - use of docstrings and type hinting
+- **Formatting**
+  - respect of clear code conventions
+  
+  *P.S. you can use a linter and automatic code formatters to help you with that*
+
+- Proper **Functioning** of the code
+  - the code must run without bugs
+
+Bseides the evaluation of the pull requests, we will also evaluate: 
+- **Reproducibility** and clarity of instructions to run the code (we will actually try to run your code)
+  - Having a clear README.md with 
+    - the context of the project
+    - the name of the participants and their github users
+    - the steps to recreate the Python environment
+    - the instructions to run all parts of the code
 - Use of *Pull Requests* (see below) to coordinate your collaboration 
 
 ## Steps to reproduce to build the deliverable
@@ -74,6 +84,8 @@ You can follow the order of the branches to build your project and collaborate.
 
 > [!NOTE]
 > There are "TODO" in the code of the different branches. Each "TODO" corresponds to a task to perform to build the project.
+> [!IMPORTANT]
+> Remember to remove all code that is not used before the end of the project (including all TODO tags in the code).
 
 **Please follow these steps**:
 
