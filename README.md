@@ -1,144 +1,198 @@
 <div align="center">
 
-# xhec-mlops-project-student
+# MLOps Project: Abalone Age Prediction
 
-[![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10-blue.svg)]()
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Python Version](https://img.shields.io/badge/python-3.10%20or%203.11-blue.svg)]()
 [![Linting: ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-informational?logo=pre-commit&logoColor=white)](https://github.com/artefactory/xhec-mlops-project-student/blob/main/.pre-commit-config.yaml)
 </div>
 
-This repository has for purpose to industrialize the [Abalone age prediction](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset) Kaggle contest.
+## 🎯 Project Overview
 
-<details>
-<summary>Details on the Abalone Dataset</summary>
+Welcome to your MLOps project! In this hands-on project, you'll build a complete machine learning system to predict the age of abalone (a type of sea snail) using physical measurements instead of the traditional time-consuming method of counting shell rings under a microscope.
 
-The age of abalone is determined by cutting the shell through the cone, staining it, and counting the number of rings through a microscope -- a boring and time-consuming task. Other measurements, which are easier to obtain, are used to predict the age.
+**Your Mission**: Transform a simple ML model into a production-ready system with automated training, deployment, and prediction capabilities.
 
-**Goal**: predict the age of abalone (column "Rings") from physical measurements ("Shell weight", "Diameter", etc...)
+## 📊 About the Dataset
 
-You can download the dataset on the [Kaggle page](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
+Traditionally, determining an abalone's age requires:
+1. Cutting the shell through the cone
+2. Staining it 
+3. Counting rings under a microscope (very time-consuming!)
 
-</details>
+**Your Goal**: Use easier-to-obtain physical measurements (shell weight, diameter, etc.) to predict the age automatically.
 
-## Table of Contents
+📥 **Download**: Get the dataset from the [Kaggle page](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
 
-- [xhec-mlops-project-student](#xhec-mlops-project-student)
-  - [Table of Contents](#table-of-contents)
-  - [Deliverables and Evaluation](#deliverables-and-evaluation)
-    - [Deliverables](#deliverables)
-    - [Evaluation](#evaluation)
-  - [Steps to reproduce to build the deliverable](#steps-to-reproduce-to-build-the-deliverable)
-    - [Pull requests in this project](#pull-requests-in-this-project)
-    - [Tips to work on this project](#tips-to-work-on-this-project)
 
-## Deliverables and notation
+## 🚀 Quick Start
 
-### Deliverables
+### Prerequisites
+- GitHub account
+- [Kaggle account](https://www.kaggle.com/account/login?phase=startRegisterTab&returnUrl=%2F) (for dataset download)
+- Python 3.10 or 3.11
 
-The deliverable of this project is a copy of this repository with the industrialization of the Abalone age prediction model. We expect to see: 
+### Setup Steps
 
-1. a workflow to train a model using Prefect
-- The workflows to train the model and to make the inference (prediction of the age of abalone) are in separate modules and use Prefect `flow` and `task` objects
-- The code to get the trained model and encoder is in a separate module and must be reproducible (not necessarily in a docker container)
-2. a Prefect deployment to retrain the model regularly
-3. an API that runs on a local app and that allows users to make predictions on new data
-  - A working API which can be used to make predictions on new data
-    - The API can run on a docker container
-    - The API has validation on input data (use Pydantic)
+1. **Fork this repository** 
+   - ⚠️ **Important**: Uncheck "Copy the `main` branch only" to get all project branches
+   
+2. **Add your team members** as admins to your forked repository
 
-### Evaluation
+3. **Set up your development environment**:
+   ```bash
+   # Create and activate a virtual environment
+   uv sync 
+   source venv/bin/activate # on Windows: venv\Scripts\activate
 
-Each of your pull requests will be graded based on the following criteria:
+   # Install pre-commit hooks for code quality
+    uv pip install pre-commit
+    uv run pre-commit install
+   ```
 
-- **Clarity** and quality of code
-  - good module structure
-  - naming conventions
-  - use of docstrings and type hinting
-- **Formatting**
-  - respect of clear code conventions
-  
-  *P.S. you can use a linter and automatic code formatters to help you with that*
+## 📋 What You'll Build
 
-- Proper **Functioning** of the code
-  - the code must run without bugs
+By the end of this project, you'll have created:
 
-Bseides the evaluation of the pull requests, we will also evaluate: 
-- **Reproducibility** and clarity of instructions to run the code (we will actually try to run your code)
-  - Having a clear README.md with 
-    - the context of the project
-    - the name of the participants and their github users
-    - the steps to recreate the Python environment
-    - the instructions to run all parts of the code
-- Use of *Pull Requests* (see below) to coordinate your collaboration 
+### 🤖 **Automated ML Pipeline** 
+- Training workflows using Prefect
+- Automatic model retraining on schedule
+- Reproducible model and data processing
 
-## Steps to reproduce to build the deliverable
+### 🌐 **Prediction API**
+- REST API for real-time predictions
+- Input validation with Pydantic
+- Docker containerization
 
-To help you with the structure and order of steps to perform in this project, we created different pull requests templates. 
-Each branch in this repository corresponds to a future pull request and has an attached markdown file with the instructions to perform the tasks of the pull request.
-Each branch starts with a number.
-You can follow the order of the branches to build your project and collaborate.
+### 📊 **Production-Ready Code**
+- Clean, well-documented code
+- Automated testing and formatting
+- Proper error handling 
 
-> [!NOTE]
-> There are "TODO" in the code of the different branches. Each "TODO" corresponds to a task to perform to build the project.
-> [!IMPORTANT]
-> Remember to remove all code that is not used before the end of the project (including all TODO tags in the code).
+## 📝 How to Work on This Project
 
-**Please follow these steps**:
+### The Branch-by-Branch Approach
 
-- If not done already, create a GitHub account
-- If not done already, create a [Kaggle account](https://www.kaggle.com/account/login?phase=startRegisterTab&returnUrl=%2F) (so you can download the dataset)
-- Fork this repository (one person per group)
+This project is organized into numbered branches, each representing a step in building your MLOps system. Think of it like a guided tutorial where each branch teaches you something new!
 
-**WARNING**: make sure to **unselect** the option "Copy the `master` branch only", so you have all the branches in the forked repository.
+**Here's how it works**:
 
-- Add the different members of your group as admin to your forked repository
-- Follow the order of the numbered branches and for each branch:
-  - Read the PR_i.md (where i is the number of the branch) file to understand the task to perform
-   > [!NOTE]
-   > Dont forget to integrate your work from past branches (except for when working on branch #1 obviously (!))
-   > ```bash
-   > git checkout branch_number_i
-   > git pull origin master
-   > # At this point, you might have a VIM window opening, you can close it using the command ":wq" 
-   > git push
-   > ```
-    - Read and **follow** all the instructions in the the PR instructions file
-    - Do as many commits as necessary on the branch_number_i to perform the task indicated in the corresponding markdown file
-    - Open **A SINGLE** pull request from this branch to the main branch of your forked repository
-    - Once done, merge the pull request in the main branch of your forked repository
+1. **Each branch = One pull request** with specific tasks
+2. **Follow the numbers** (branch_0, branch_1, etc.) in order
+3. **Read the PR instructions** (PR_0.md, PR_1.md, etc.) before starting
+4. **Complete all TODOs** in that branch's code
+5. **Create a pull request** when done
+6. **Merge and move to the next branch**
 
-### Pull requests in this project
+### Step-by-Step Workflow
 
-Github [Pull Requests](https://docs.github.com/articles/about-pull-requests) are a way to propose changes to a repository. They have for purpose to integrate the work of *feature branches* into the main branch of the repository, with a collaborative review process.
+For each numbered branch:
 
-**PR tips:**
+```bash
+# Switch to the branch
+git checkout branch_number_i
 
-Make sure that you select your own repository when selecting the base repository:
+# Get latest changes (except for branch_1)
+git pull origin main
+# Note: A VIM window might open - just type ":wq" to close it
 
+# Push your branch
+git push
+```
+
+Then:
+1. 📖 Read the PR_i.md file carefully
+2. 💻 Complete all the TODOs in the code  
+3. 🔧 Test your changes
+4. 📤 Open **ONE** pull request to your main branch
+5. ✅ Merge the pull request
+6. 🔄 Move to the next branch
+
+> **💡 Pro Tip**: Always integrate your previous work when starting a new branch (except branch_1)!
+
+### 🔍 Understanding Pull Requests
+
+Pull Requests (PRs) are how you propose and review changes before merging them into your main codebase. They're essential for team collaboration!
+
+**Important**: When creating a PR, make sure you're merging into YOUR forked repository, not the original:
+
+❌ **Wrong** (merging to original repo):
 ![PR Wrong](assets/PR_wrong.png)
 
-It should rather look like this:
-
+✅ **Correct** (merging to your fork):
 ![PR Right](assets/PR_right.png)
 
-### Tips to work on this project
+## 💡 Development Tips
 
-- Use a virtual environment to install the dependencies of the project (conda or virtualenv for instance)
+### Managing Dependencies
 
-- Once your virtual environment is activated, install pre-commit hooks to automatically format your code before each commit:
-
-```bash
-pip install pre-commit
-pre-commit install
-```
-
-This will guarantee that your code is formatted correctly and of good quality before each commit.
-
-- Use a `requirements.in` file to list the dependencies of your project. You can use the following command to generate a `requirements.txt` file from a `requirements.in` file:
+Use uv to manage dependencies. Install or update packages with:
 
 ```bash
-pip-compile requirements.in
+uv add <package>==<version>
 ```
+
+Then sync the environment and regenerate the dependency files:
+
+```bash
+uv sync
+```
+
+### Code Quality
+- The pre-commit hooks will automatically format your code
+- Remove all TODOs and unused code before final submission
+- Use clear variable names and add docstrings
+
+## 📊 Evaluation Criteria
+
+Your project will be evaluated on:
+
+### 🔍 **Code Quality** 
+- Clean, readable code structure
+- Proper naming conventions  
+- Good use of docstrings and type hints
+
+### 🎨 **Code Formatting**
+- Consistent style (automated with pre-commit)
+- Professional presentation
+
+### ⚙️ **Functionality** 
+- Code runs without errors
+- All requirements implemented correctly
+
+### 📖 **Documentation & Reproducibility**
+- Clear README with setup instructions
+- Team member names and GitHub usernames
+- Step-by-step instructions to run everything
+
+### 🤝 **Collaboration**
+- Effective use of Pull Requests
+- Good teamwork and communication
+
+---
+
+## 🎯 Final Deliverables Checklist
+
+When you're done, your repository should contain:
+
+✅ **Automated Training Pipeline**
+- [ ] Prefect workflows for model training
+- [ ] Separate modules for training and inference  
+- [ ] Reproducible model and encoder generation
+
+✅ **Automated Deployment**  
+- [ ] Prefect deployment for regular retraining
+
+✅ **Production API**
+- [ ] Working REST API for predictions
+- [ ] Pydantic input validation
+- [ ] Docker containerization
+
+✅ **Professional Documentation**
+- [ ] Updated README with team info
+- [ ] Clear setup and run instructions
+- [ ] All TODOs removed from code
+
+---
+
+**Ready to start? Head to branch_0 and read PR_0.md for your first task! 🚀**
