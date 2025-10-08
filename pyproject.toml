@@ -4,18 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xhec-mlops-project-student"
+version = "0.0.1"
 authors = [
   { name = "username", email = "user@email.com" },
 ] # TODO: add authors here
-description = "This repository contains the solution for the X-HEC MLOps Project on the industrialization of Abalone age prediction model."
-version = "0.0.1"
-readme = "README.md"
+description = "X-HEC MLOps Project on Abalone age prediction model"
 requires-python = ">3.10" # TODO: update this version
 
-[project.urls]
-"Homepage" = "https://github.com/artefactory/xhec-mlops-project-student" # TODO: update this URL
-
-[tool.setuptools]
-packages = ["src"]
-
-# TODO: add black, isort, and ruff (optional - not needed if using flake8) configurations here
+# TODO: add pydantic, pre-commit and ruff as a dependency
