@@ -3,10 +3,10 @@
 from typing import Optional, Tuple
 
 import pandas as pd
+from prefect import task
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from .config import MODEL_DIR, NUMERICAL_COLS
-from .utils import save_to_pickle
+from .config import NUMERICAL_COLS
 
 
 def onehot(df: pd.DataFrame) -> pd.DataFrame:
@@ -46,12 +46,12 @@ def scale(
     if scaler is None:
         scaler = StandardScaler()
         df[numerical_cols] = scaler.fit_transform(df[numerical_cols])
-        save_to_pickle(scaler, MODEL_DIR / "scaler.pkl")
     else:
         df[numerical_cols] = scaler.transform(df[numerical_cols])
     return df, scaler
 
 
+@task(name="preprocess-data")
 def preprocess_data(
     df: pd.DataFrame, scaler: Optional[StandardScaler] = None, with_target: bool = True
 ) -> Tuple[pd.DataFrame, Optional[pd.Series], StandardScaler]:

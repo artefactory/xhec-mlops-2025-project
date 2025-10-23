@@ -3,12 +3,14 @@
 from typing import Optional
 
 import pandas as pd
+from prefect import task
 from sklearn.base import BaseEstimator
 
 from .config import MODEL_DIR
 from .utils import load_from_pickle
 
 
+@task(name="predict")
 def predict(model: Optional[BaseEstimator], new_features: pd.DataFrame) -> pd.Series:
     """Make predictions using the trained Linear Regression model.
 

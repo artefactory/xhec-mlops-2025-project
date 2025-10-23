@@ -1,10 +1,12 @@
 # Training function for a Linear Regression model
 
 import pandas as pd
+from prefect import task
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 
+@task(name="train-model")
 def train_model(x: pd.DataFrame, y: pd.Series) -> LinearRegression:
     """Train a Linear Regression model on the provided features and target.
 
@@ -20,6 +22,7 @@ def train_model(x: pd.DataFrame, y: pd.Series) -> LinearRegression:
     return model
 
 
+@task(name="evaluate-model")
 def evaluate_model(model: LinearRegression, x: pd.DataFrame, y: pd.Series) -> float:
     """Evaluate the model using Mean Squared Error (MSE).
 

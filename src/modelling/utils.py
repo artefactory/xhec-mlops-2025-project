@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from prefect import task
 
 from .config import DATA_DIR
 
@@ -14,6 +15,7 @@ def get_kaggle_data() -> None:
     pass
 
 
+@task(name="load-data", retries=2)
 def load_data(file_path: str = DATA_DIR / "abalone.csv") -> pd.DataFrame:
     """Load the dataset from a local CSV file.
 
@@ -26,6 +28,7 @@ def load_data(file_path: str = DATA_DIR / "abalone.csv") -> pd.DataFrame:
     return pd.read_csv(file_path)
 
 
+@task(name="save-to-pickle")
 def save_to_pickle(obj: Any, file_path: str) -> None:
     """Save an object to a specified file path in pickle format.
 
@@ -36,10 +39,15 @@ def save_to_pickle(obj: Any, file_path: str) -> None:
     Returns:
         None
     """
-    with Path.open(file_path, "wb") as f:
+    file_path = Path(file_path)
+    # Create parent directories if they don't exist
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with file_path.open("wb") as f:
         pkl.dump(obj, f)
 
 
+@task(name="load-from-pickle", retries=2)
 def load_from_pickle(file_path: str) -> Any:
     """Load an object from a specified pickle file.
 

@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from loguru import logger
+from prefect import flow
 
 from .config import DATA_DIR
 from .preprocessing import preprocess_data
@@ -11,8 +12,15 @@ from .training import train_model
 from .utils import load_data, save_to_pickle
 
 
+@flow(name="training-pipeline", log_prints=True)
 def main(trainset_path: Path = DATA_DIR / "abalone.csv") -> None:
-    """Train a model using the data at the given path and save the model (pickle)."""
+    """Train a model using the data at the given path and save the model (pickle).
+
+    This is the main training flow that orchestrates all the training tasks.
+
+    Args:
+        trainset_path: Path to the training dataset
+    """
     # Read data
     logger.info(f"Loading data from {trainset_path}")
     df = load_data(trainset_path)
