@@ -196,3 +196,27 @@ When you're done, your repository should contain:
 ---
 
 **Ready to start? Head to branch_0 and read PR_0.md for your first task! 🚀**
+
+
+PR_0:
+
+## 🛠 Development Setup
+
+To set up your environment:
+
+```bash
+uv sync
+source .venv/bin/activate
+pre-commit install
+pre-commit run --all-files
+```
+
+This project uses:
+
+- Ruff for linting and formatting
+
+- Pre-commit for code quality checks
+
+- Prefect for pipeline orchestration
+
+- FastAPI for serving predictions
