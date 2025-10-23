@@ -14,7 +14,7 @@ authors = [
   { name = "cedrickirek", email = "cedric.kire@hec.edu" },
 ]
 description = "X-HEC MLOps Project on Abalone age prediction model"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     # Data Science & ML
     "pandas==2.1.1",

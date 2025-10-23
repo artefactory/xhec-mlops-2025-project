@@ -2,10 +2,25 @@
 
 # MLOps Project: Abalone Age Prediction
 
-[![Python Version](https://img.shields.io/badge/python-3.10%20or%203.11-blue.svg)]()
+[![Python Version](https://img.shields.io/badge/python-3.11-blue.svg)]()
 [![Linting: ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-informational?logo=pre-commit&logoColor=white)](https://github.com/artefactory/xhec-mlops-project-student/blob/main/.pre-commit-config.yaml)
 </div>
+
+## 👥 Team
+
+This project is developed by:
+
+| Name | GitHub Username | Email |
+|------|----------------|-------|
+| Mamoun Jamai | [@mamounjamai](https://github.com/mamounjamai) | mamoun.jamai@hec.edu |
+| Mehdi Digua | [@MehdiD19](https://github.com/MehdiD19) | mehdi.digua@hec.edu |
+| Pierre Lafarguette | [@plafarguette2](https://github.com/plafarguette2) | pierre.lafarguette@hec.edu |
+| Marco Salerno | [@sqerbo01](https://github.com/sqerbo01) | marco.salerno@hec.edu |
+| Iliass Sijelmassi | [@iliassSjm](https://github.com/iliassSjm) | iliass.sijelmassi@hec.edu |
+| Cedric Kire | [@cedrickirek](https://github.com/cedrickirek) | cedric.kire@hec.edu |
+
+---
 
 ## 🎯 Project Overview
 
@@ -30,7 +45,7 @@ Traditionally, determining an abalone's age requires:
 ### Prerequisites
 - GitHub account
 - [Kaggle account](https://www.kaggle.com/account/login?phase=startRegisterTab&returnUrl=%2F) (for dataset download)
-- Python 3.10 or 3.11
+- Python 3.11
 
 ### Setup Steps
 
@@ -39,15 +54,32 @@ Traditionally, determining an abalone's age requires:
 
 2. **Add your team members** as admins to your forked repository
 
-3. **Set up your development environment**:
+3. **Clone your forked repository**:
    ```bash
-   # Create and activate a virtual environment
+   git clone https://github.com/YOUR_USERNAME/ML-Ops-Project.git
+   cd ML-Ops-Project
+   ```
+
+4. **Set up your development environment**:
+   ```bash
+   # Sync dependencies and create virtual environment
    uv sync
-   source venv/bin/activate # on Windows: venv\Scripts\activate
+
+   # Activate the virtual environment
+   source .venv/bin/activate  # macOS/Linux
+   # OR on Windows: .venv\Scripts\activate
 
    # Install pre-commit hooks for code quality
-    uv pip install pre-commit
-    uv run pre-commit install
+   uv run pre-commit install
+   ```
+
+5. **Verify your setup**:
+   ```bash
+   # Check Python version
+   python --version  # Should be 3.11.x
+
+   # Test pre-commit hooks
+   uv run pre-commit run --all-files
    ```
 
 ## 📋 What You'll Build
@@ -142,6 +174,76 @@ uv sync
 - The pre-commit hooks will automatically format your code
 - Remove all TODOs and unused code before final submission
 - Use clear variable names and add docstrings
+
+## 🛠️ Development Workflow
+
+### Running Code Quality Checks
+
+```bash
+# Run linter
+uv run ruff check .
+
+# Run linter with auto-fix
+uv run ruff check . --fix
+
+# Run formatter
+uv run ruff format .
+
+# Run all pre-commit hooks
+uv run pre-commit run --all-files
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+uv run pytest
+
+# Run tests with verbose output
+uv run pytest -v
+
+# Run specific test file
+uv run pytest tests/test_specific.py
+```
+
+### Managing Dependencies
+
+```bash
+# Add a new package
+uv add package-name==version
+
+# Add a development package
+uv add --dev package-name==version
+
+# Sync environment after changes
+uv sync
+
+# Update lock file
+uv lock
+```
+
+### Git Workflow for Each Branch
+
+```bash
+# 1. Switch to the branch
+git checkout branch_name
+
+# 2. Pull latest changes from main (except for branch_1)
+git pull origin main
+
+# 3. Create your working branch
+git checkout -b branch_name-your-name
+
+# 4. Make your changes, then commit
+git add .
+git commit -m "descriptive message"
+
+# 5. Push your branch
+git push -u origin branch_name-your-name
+
+# 6. Create Pull Request on GitHub
+# Merge to main after review
+```
 
 ## 📊 Evaluation Criteria
 
