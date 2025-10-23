@@ -15,6 +15,7 @@ from sklearn.preprocessing import StandardScaler
 from preprocessing import preprocess_data
 from utils import pickle_object
 
+
 @task(name="Load and Preprocess Data", retries=2, retry_delay_seconds=10)
 def load_and_preprocess_data(csv_path: Path) -> pd.DataFrame:
     """Load and preprocess the abalone dataset.
@@ -27,6 +28,7 @@ def load_and_preprocess_data(csv_path: Path) -> pd.DataFrame:
     """
     df = preprocess_data(csv_path)
     return df
+
 
 @task(name="Prepare Features and Target")
 def prepare_features_target(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]:
@@ -42,12 +44,10 @@ def prepare_features_target(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]:
     y = df["rings"]
     return X, y
 
+
 @task(name="Split Train Test")
 def split_train_test(
-    X: pd.DataFrame,
-    y: pd.Series,
-    test_size: float = 0.2,
-    random_state: int = 42
+    X: pd.DataFrame, y: pd.Series, test_size: float = 0.2, random_state: int = 42
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
     """Split data into train and test sets.
 
@@ -64,6 +64,7 @@ def split_train_test(
         X, y, test_size=test_size, random_state=random_state
     )
     return X_train, X_test, y_train, y_test
+
 
 @task(name="Build Pipeline")
 def build_pipeline(X: pd.DataFrame) -> Pipeline:
@@ -89,11 +90,10 @@ def build_pipeline(X: pd.DataFrame) -> Pipeline:
 
     return model
 
+
 @task(name="Train Model")
 def train_model_task(
-    model: Pipeline,
-    X_train: pd.DataFrame,
-    y_train: pd.Series
+    model: Pipeline, X_train: pd.DataFrame, y_train: pd.Series
 ) -> Pipeline:
     """Train the model pipeline.
 
@@ -108,12 +108,9 @@ def train_model_task(
     model.fit(X_train, y_train)
     return model
 
+
 @task(name="Evaluate Model")
-def evaluate_model(
-    model: Pipeline,
-    X_test: pd.DataFrame,
-    y_test: pd.Series
-) -> dict:
+def evaluate_model(model: Pipeline, X_test: pd.DataFrame, y_test: pd.Series) -> dict:
     """Evaluate model performance on test set.
 
     Args:
@@ -134,6 +131,7 @@ def evaluate_model(
 
     return metrics
 
+
 @task(name="Save Model")
 def save_model(model: Pipeline, output_dir: Path) -> None:
     """Save the trained model to disk.
@@ -146,12 +144,13 @@ def save_model(model: Pipeline, output_dir: Path) -> None:
     model_path = output_dir / "model.pkl"
     pickle_object(model, model_path)
 
+
 @flow(name="Train Abalone Age Prediction Model", log_prints=True)
 def training_flow(
     trainset_path: Path,
     output_dir: Path | None = None,
     test_size: float = 0.2,
-    random_state: int = 42
+    random_state: int = 42,
 ) -> dict:
     """Complete training flow for the abalone age prediction model.
 
@@ -207,6 +206,7 @@ def training_flow(
     print("Training flow completed successfully!")
 
     return metrics
+
 
 if __name__ == "__main__":
     import argparse

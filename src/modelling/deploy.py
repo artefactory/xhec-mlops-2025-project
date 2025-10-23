@@ -19,11 +19,11 @@ def create_deployment():
             "trainset_path": default_trainset_path,
             "output_dir": default_output_dir,
             "test_size": 0.2,
-            "random_state": 42
+            "random_state": 42,
         },
         cron="0 2 * * 0",  # Every Sunday at 2 AM
         tags=["ml", "training", "abalone", "weekly"],
-        description="Automated weekly retraining of the abalone age prediction model"
+        description="Automated weekly retraining of the abalone age prediction model",
     )
 
     return deployment
