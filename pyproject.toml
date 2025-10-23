@@ -32,6 +32,7 @@ dependencies = [
     "seaborn>=0.13.2",
     "kagglehub>=0.3.13",
     "prefect>=3.0.0",
+    "loguru>=0.7.3",
 ]
 
 [dependency-groups]

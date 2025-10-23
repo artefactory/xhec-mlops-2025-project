@@ -96,3 +96,6 @@ mlruns/
 # Models - ignore contents but keep directory structure
 models/*
 !models/.gitkeep
+
+# Pickle files
+*.pkl
