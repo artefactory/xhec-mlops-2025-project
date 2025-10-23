@@ -85,3 +85,10 @@ secrets/*
 
 # Mac files
 .DS_Store
+
+# Local mlflow tracking folder
+mlruns_local/
+mlruns/
+
+# ruff cache
+.ruff_cache/

@@ -1,12 +1,11 @@
 # Pre-commit configuration
-# This file defines quality checks that run automatically on each commit.
 
 repos:
   # -----------------------------
   # Generic sanity checks
   # -----------------------------
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
-    rev: v4.6.0   # use a recent stable tag
+    rev: v6.0.0   # use a recent stable tag
     hooks:
       - id: trailing-whitespace        # remove trailing spaces
       - id: end-of-file-fixer          # ensure file ends with a newline
@@ -19,23 +18,20 @@ repos:
   # Ruff (lint + format)
   # -----------------------------
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9   # pin to a ruff-pre-commit tag; update as needed
+    rev: v0.14.1
     hooks:
       - id: ruff
-        # --fix will auto-apply safe fixes; --exit-non-zero-on-fix fails CI if fixes were needed
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
-        # this is Ruff's formatter (replaces black). No args needed by default.
 
   # -----------------------------
-  # uv integration (optional but nice)
-  # Keeps lock files up-to-date when pyproject changes.
+  # uv integration
   # -----------------------------
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.7.17
+    rev: 0.9.5
     hooks:
       - id: uv-lock
 
-# Globally exclude generated or irrelevant paths from hooks.
+
 exclude: >
   ^(.svn|CVS|\.bzr|\.hg|\.git|__pycache__|\.tox|\.ipynb_checkpoints|assets|tests/assets/|venv/|\.venv/)
