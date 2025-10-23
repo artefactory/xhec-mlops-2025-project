@@ -26,8 +26,8 @@ def remove_iqr_outliers(df: pd.DataFrame, cols: list) -> pd.DataFrame:
 def preprocess_data(csv_path: Path) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     df.columns = [to_snake(c) for c in df.columns]
-    if "rings" in df.columns:
-        df["age"] = df["rings"] + 1.5
+    if "age" in df.columns:
+        df = df.drop(columns=["age"])
 
     numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
     df_clean = remove_iqr_outliers(df, numeric_cols)
