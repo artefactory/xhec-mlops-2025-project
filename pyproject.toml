@@ -6,9 +6,33 @@ build-backend = "setuptools.build_meta"
 name = "xhec-mlops-project-student"
 version = "0.0.1"
 authors = [
-  { name = "username", email = "user@email.com" },
-] # TODO: add authors here
+  { name = "verkrst", email = "verakrstic002@gmail.com" },
+  { name = "Shay0909", email = "Shaymaa.bakkass@gmail.com" },
+  { name = "nandanasreeraj123", email = "nandanasreeraj@gmail.com" },
+  { name = "magdalenajankowska", email = "magdalenaj1000@gmail.com" },
+  { name = "Sheetal-12", email = "sheetal.popat@hec.edu" }
+]
 description = "X-HEC MLOps Project on Abalone age prediction model"
-requires-python = ">3.10" # TODO: update this version
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
 
-# TODO: add pydantic, pre-commit and ruff as a dependency
+# main runtime dependencies
+dependencies = [
+  "pandas>=2.1,<2.3",
+  "numpy>=1.26,<3",
+  "scikit-learn>=1.3,<1.6",
+  "pyarrow>=14,<18",
+  "fastapi>=0.103,<1",
+  "uvicorn>=0.23,<0.39",
+  "pydantic>=2.4,<3",
+  "prefect>=3,<4",
+  "loguru>=0.7,<1"
+]
+
+[dependency-groups]
+dev = [
+  "pre-commit>=3.7",
+  "ruff>=0.5",
+  "pytest>=8",
+  "mypy>=1.11"
+]
