@@ -210,7 +210,94 @@ uv run ruff check .
 - Use clear variable names and add docstrings
 - Write type hints for function parameters and return values
 
-## 📊 Evaluation Criteria
+## � Running the ML Pipeline with Prefect
+
+This project uses [Prefect](https://www.prefect.io/) for ML workflow orchestration, providing observability, scheduling, and automated retraining capabilities.
+
+### Starting the Prefect Server
+
+Before running any workflows, start the Prefect server:
+
+```bash
+# Set the Prefect API URL (first time only)
+uv run prefect config set PREFECT_API_URL=http://0.0.0.0:4200/api
+
+# Verify SQLite is installed (required for Prefect backend)
+sqlite3 --version
+
+# Start the Prefect server
+uv run prefect server start --host 0.0.0.0
+```
+
+**Access the Prefect UI**: http://0.0.0.0:4200
+
+Keep this terminal running while you work with Prefect!
+
+### Running the Training Pipeline
+
+In a **new terminal**, run the training workflow:
+
+```bash
+# Activate virtual environment
+source .venv/bin/activate  # on macOS/Linux
+# .venv\Scripts\activate   # on Windows
+
+# Run the training pipeline
+uv run python -m src.modelling.main data/abalone.csv
+```
+
+This will:
+- Load and preprocess the data
+- Train the model
+- Save the model and scaler to `src/web_service/local_objects/`
+
+**View the flow run** in the Prefect UI at http://0.0.0.0:4200/runs
+
+### Creating Automated Deployments
+
+To set up automated retraining on a schedule:
+
+```bash
+# Run the deployment script (keeps running)
+uv run python -m src.modelling.deploy
+```
+
+This creates a deployment that:
+- Runs the training pipeline daily at 2 AM UTC
+- Can be manually triggered from the UI
+- Provides full observability of each training run
+
+**Managing deployments:**
+- View deployments: http://0.0.0.0:4200/deployments
+- Click "Quick Run" to trigger an immediate training run
+- Toggle the schedule on/off
+- View deployment history and logs
+
+**To stop the deployment**: Press `Ctrl+C` in the terminal running the deployment
+
+### Prefect UI Features
+
+The Prefect dashboard provides:
+- **Flow Runs**: View all pipeline executions with status and logs
+- **Deployments**: Manage scheduled training runs
+- **Work Queues**: Monitor task execution
+- **Flow Run Graph**: Visualize task dependencies and execution flow
+- **Logs**: Detailed execution logs for debugging
+
+**Useful commands:**
+
+```bash
+# Reset the Prefect database (if needed)
+uv run prefect server database reset
+
+# View deployments via CLI
+uv run prefect deployment ls
+
+# View flow runs via CLI
+uv run prefect flow-run ls
+```
+
+## �📊 Evaluation Criteria
 
 Your project will be evaluated on:
 
