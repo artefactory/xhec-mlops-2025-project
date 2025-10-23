@@ -1,0 +1,5 @@
+# Development dependencies for linting and formatting
+black
+ruff
+isort
+pre-commit
