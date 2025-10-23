@@ -26,7 +26,10 @@ dependencies = [
   "uvicorn>=0.23,<0.39",
   "pydantic>=2.4,<3",
   "prefect>=3,<4",
-  "loguru>=0.7,<1"
+  "loguru>=0.7,<1",
+  "matplotlib>=3.10.7",
+  "seaborn>=0.13.2",
+  "mlflow>=3.5.1",
 ]
 
 [dependency-groups]
@@ -34,5 +37,10 @@ dev = [
   "pre-commit>=3.7",
   "ruff>=0.5",
   "pytest>=8",
-  "mypy>=1.11"
+  "mypy>=1.11",
+  "ipykernel>=7.0.1",
+  "pip>=25.2",
 ]
+
+[tool.setuptools.packages.find]
+exclude = ["notebooks*", "data*", "assets*"]
