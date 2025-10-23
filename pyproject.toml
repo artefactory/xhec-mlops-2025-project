@@ -36,3 +36,6 @@ dev = [
   "pytest>=8",
   "mypy>=1.11"
 ]
+
+[tool.setuptools.packages.find]
+exclude = ["notebooks*", "data*", "assets*"]
