@@ -29,6 +29,7 @@ dependencies = [
   "loguru>=0.7,<1",
   "matplotlib>=3.10.7",
   "seaborn>=0.13.2",
+  "mlflow>=3.5.1",
 ]
 
 [dependency-groups]
