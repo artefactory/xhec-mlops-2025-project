@@ -35,7 +35,9 @@ def main(trainset_path: Path = DATA_DIR / "abalone.csv") -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train a model using the data at the given path.")
+    parser = argparse.ArgumentParser(
+        description="Train a model using the data at the given path."
+    )
     parser.add_argument("trainset_path", type=str, help="Path to the training set")
     args = parser.parse_args()
     main(Path(args.trainset_path))

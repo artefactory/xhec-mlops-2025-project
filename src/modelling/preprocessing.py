@@ -28,7 +28,9 @@ def onehot(df: pd.DataFrame) -> pd.DataFrame:
     return df_encoded
 
 
-def scale(df: pd.DataFrame, scaler: Optional[StandardScaler] = None) -> Tuple[pd.DataFrame, StandardScaler]:
+def scale(
+    df: pd.DataFrame, scaler: Optional[StandardScaler] = None
+) -> Tuple[pd.DataFrame, StandardScaler]:
     """Scale the numerical features in the abalone dataset using StandardScaler.
 
     Args:
@@ -40,7 +42,15 @@ def scale(df: pd.DataFrame, scaler: Optional[StandardScaler] = None) -> Tuple[pd
         Tuple[pd.DataFrame, StandardScaler]: A tuple containing the scaled dataframe and the scaler used.
     """
     df = df.copy()
-    numerical_cols = ["Length", "Diameter", "Height", "Whole weight", "Shucked weight", "Viscera weight", "Shell weight"]
+    numerical_cols = [
+        "Length",
+        "Diameter",
+        "Height",
+        "Whole weight",
+        "Shucked weight",
+        "Viscera weight",
+        "Shell weight",
+    ]
     if scaler is None:
         scaler = StandardScaler()
         df[numerical_cols] = scaler.fit_transform(df[numerical_cols])
