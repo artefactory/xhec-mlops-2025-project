@@ -186,24 +186,8 @@ uv run ruff check .
 # Run linter with auto-fix
 uv run ruff check . --fix
 
-# Run formatter
-uv run ruff format .
-
 # Run all pre-commit hooks
 uv run pre-commit run --all-files
-```
-
-### Running Tests
-
-```bash
-# Run all tests
-uv run pytest
-
-# Run tests with verbose output
-uv run pytest -v
-
-# Run specific test file
-uv run pytest tests/test_specific.py
 ```
 
 ### Managing Dependencies
