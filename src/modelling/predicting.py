@@ -23,4 +23,4 @@ def predict(model: Optional[BaseEstimator], new_features: pd.DataFrame) -> pd.Se
         model = load_from_pickle(MODEL_DIR / "model.pkl")
 
     predictions = model.predict(new_features)
-    return pd.Series(predictions)
+    return pd.Series(predictions) + 1.5

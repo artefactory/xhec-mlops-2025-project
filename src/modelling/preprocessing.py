@@ -5,7 +5,7 @@ from typing import Optional, Tuple
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from .config import MODEL_DIR
+from .config import MODEL_DIR, NUMERICAL_COLS
 from .utils import save_to_pickle
 
 
@@ -42,15 +42,7 @@ def scale(
         Tuple[pd.DataFrame, StandardScaler]: A tuple containing the scaled dataframe and the scaler used.
     """
     df = df.copy()
-    numerical_cols = [
-        "Length",
-        "Diameter",
-        "Height",
-        "Whole weight",
-        "Shucked weight",
-        "Viscera weight",
-        "Shell weight",
-    ]
+    numerical_cols = NUMERICAL_COLS
     if scaler is None:
         scaler = StandardScaler()
         df[numerical_cols] = scaler.fit_transform(df[numerical_cols])
