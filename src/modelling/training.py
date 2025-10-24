@@ -9,7 +9,7 @@ from utils import pickle_object
 
 
 def train_model(df, output_dir: Path):
-    X = df.drop(columns=["rings", "age"])
+    X = df.drop(columns=["rings"])
     y = df["rings"]
 
     dummy_cols = [c for c in X.columns if c.startswith("sex_")]
