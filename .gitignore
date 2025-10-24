@@ -86,3 +86,8 @@ secrets/*
 
 # Mac files
 .DS_Store
+
+# Model files
+*.pkl
+local_objects/
+src/web_service/local_objects/
