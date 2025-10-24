@@ -11,7 +11,7 @@
 
 Welcome to your MLOps project! In this hands-on project, you'll build a complete machine learning system to predict the age of abalone (a type of sea snail) using physical measurements instead of the traditional time-consuming method of counting shell rings under a microscope.
 
-**Your Mission**: Transform a simple ML model into a production-ready system with automated training, deployment, and prediction capabilities.
+**Our Mission**: Transform a simple ML model into a production-ready system with automated training, deployment, and prediction capabilities.
 
 ## 📊 About the Dataset
 
@@ -20,182 +20,9 @@ Traditionally, determining an abalone's age requires:
 2. Staining it
 3. Counting rings under a microscope (very time-consuming!)
 
-**Your Goal**: Use easier-to-obtain physical measurements (shell weight, diameter, etc.) to predict the age automatically.
+**Our Goal**: Use easier-to-obtain physical measurements (shell weight, diameter, etc.) to predict the age automatically.
 
-📥 **Download**: Get the dataset from the [Kaggle page](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
-
-
-## 🚀 Quick Start
-
-### Prerequisites
-- GitHub account
-- [Kaggle account](https://www.kaggle.com/account/login?phase=startRegisterTab&returnUrl=%2F) (for dataset download)
-- Python 3.10 or 3.11
-
-### Setup Steps
-
-1. **Fork this repository**
-   - ⚠️ **Important**: Uncheck "Copy the `main` branch only" to get all project branches
-
-2. **Add your team members** as admins to your forked repository
-
-3. **Set up your development environment**:
-   ```bash
-   # Create and activate a virtual environment
-   uv sync
-   source venv/bin/activate # on Windows: venv\Scripts\activate
-
-   # Install pre-commit hooks for code quality
-    uv pip install pre-commit
-    uv run pre-commit install
-   ```
-
-## 📋 What You'll Build
-
-By the end of this project, you'll have created:
-
-### 🤖 **Automated ML Pipeline**
-- Training workflows using Prefect
-- Automatic model retraining on schedule
-- Reproducible model and data processing
-
-### 🌐 **Prediction API**
-- REST API for real-time predictions
-- Input validation with Pydantic
-- Docker containerization
-
-### 📊 **Production-Ready Code**
-- Clean, well-documented code
-- Automated testing and formatting
-- Proper error handling
-
-## 📝 How to Work on This Project
-
-### The Branch-by-Branch Approach
-
-This project is organized into numbered branches, each representing a step in building your MLOps system. Think of it like a guided tutorial where each branch teaches you something new!
-
-**Here's how it works**:
-
-1. **Each branch = One pull request** with specific tasks
-2. **Follow the numbers** (branch_0, branch_1, etc.) in order
-3. **Read the PR instructions** (PR_0.md, PR_1.md, etc.) before starting
-4. **Complete all TODOs** in that branch's code
-5. **Create a pull request** when done
-6. **Merge and move to the next branch**
-
-### Step-by-Step Workflow
-
-For each numbered branch:
-
-```bash
-# Switch to the branch
-git checkout branch_number_i
-
-# Get latest changes (except for branch_1)
-git pull origin main
-# Note: A VIM window might open - just type ":wq" to close it
-
-# Push your branch
-git push
-```
-
-Then:
-1. 📖 Read the PR_i.md file carefully
-2. 💻 Complete all the TODOs in the code
-3. 🔧 Test your changes
-4. 📤 Open **ONE** pull request to your main branch
-5. ✅ Merge the pull request
-6. 🔄 Move to the next branch
-
-> **💡 Pro Tip**: Always integrate your previous work when starting a new branch (except branch_1)!
-
-### 🔍 Understanding Pull Requests
-
-Pull Requests (PRs) are how you propose and review changes before merging them into your main codebase. They're essential for team collaboration!
-
-**Important**: When creating a PR, make sure you're merging into YOUR forked repository, not the original:
-
-❌ **Wrong** (merging to original repo):
-![PR Wrong](assets/PR_wrong.png)
-
-✅ **Correct** (merging to your fork):
-![PR Right](assets/PR_right.png)
-
-## 💡 Development Tips
-
-### Managing Dependencies
-
-Use uv to manage dependencies. Install or update packages with:
-
-```bash
-uv add <package>==<version>
-```
-
-Then sync the environment and regenerate the dependency files:
-
-```bash
-uv sync
-```
-
-### Code Quality
-- The pre-commit hooks will automatically format your code
-- Remove all TODOs and unused code before final submission
-- Use clear variable names and add docstrings
-
-## 📊 Evaluation Criteria
-
-Your project will be evaluated on:
-
-### 🔍 **Code Quality**
-- Clean, readable code structure
-- Proper naming conventions
-- Good use of docstrings and type hints
-
-### 🎨 **Code Formatting**
-- Consistent style (automated with pre-commit)
-- Professional presentation
-
-### ⚙️ **Functionality**
-- Code runs without errors
-- All requirements implemented correctly
-
-### 📖 **Documentation & Reproducibility**
-- Clear README with setup instructions
-- Team member names and GitHub usernames
-- Step-by-step instructions to run everything
-
-### 🤝 **Collaboration**
-- Effective use of Pull Requests
-- Good teamwork and communication
-
----
-
-## 🎯 Final Deliverables Checklist
-
-When you're done, your repository should contain:
-
-✅ **Automated Training Pipeline**
-- [ ] Prefect workflows for model training
-- [ ] Separate modules for training and inference
-- [ ] Reproducible model and encoder generation
-
-✅ **Automated Deployment**
-- [ ] Prefect deployment for regular retraining
-
-✅ **Production API**
-- [ ] Working REST API for predictions
-- [ ] Pydantic input validation
-- [ ] Docker containerization
-
-✅ **Professional Documentation**
-- [ ] Updated README with team info
-- [ ] Clear setup and run instructions
-- [ ] All TODOs removed from code
-
----
-
-**Ready to start? Head to branch_0 and read PR_0.md for your first task! 🚀**
+📥 **Dataset Download**: Get the dataset from the [Kaggle page](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
 
 
 PR_0:
@@ -220,3 +47,125 @@ This project uses:
 - Prefect for pipeline orchestration
 
 - FastAPI for serving predictions
+
+
+PR_3:
+
+## 🔄 Training Pipeline with Prefect
+
+### Option 1: Run Training Flow Directly (One-Time)
+
+**Using the new Prefect flow:**
+```bash
+python src/modelling/train_flow.py data/abalone.csv
+```
+
+**Using the original script (still works):**
+```bash
+python src/modelling/main.py data/abalone.csv
+```
+
+### Option 2: Automated Retraining with Prefect Deployment
+
+#### Start Prefect Server
+
+In a **separate terminal**, start the Prefect server:
+```bash
+prefect server start
+```
+
+The Prefect UI will be available at: **http://127.0.0.1:4200**
+
+#### Create and Run the Deployment
+
+In another terminal, activate your virtual environment and run:
+```bash
+python src/modelling/deploy.py
+```
+
+This will:
+- ✅ Create a deployment named "abalone-weekly-retraining"
+- ✅ Schedule it to run **every Sunday at 2:00 AM**
+- ✅ Keep the deployment server running (leave this terminal open)
+
+**Note:** Keep this terminal running to maintain the deployment. Press `Ctrl+C` to stop.
+
+#### Manually Trigger a Deployment Run
+
+You can trigger the deployment without waiting for the schedule:
+```bash
+# List all deployments
+prefect deployment ls
+
+# Trigger the deployment
+prefect deployment run 'Train Abalone Age Prediction Model/abalone-weekly-retraining'
+```
+
+### Visualize Flows in Prefect UI
+
+1. Open **http://127.0.0.1:4200** in your browser
+2. Navigate to:
+   - **Flows** → See all registered flows
+   - **Flow Runs** → View execution history with detailed logs
+   - **Deployments** → Manage scheduled runs
+   - **Work Pools & Workers** → Monitor deployment infrastructure
+
+3. Click on any flow run to see:
+   - 📊 Task execution timeline and DAG visualization
+   - 📝 Detailed logs for each task
+   - ⚙️ Input parameters and output results
+   - 📈 Performance metrics (MAE, MSE, R²)
+   - ⏱️ Task duration and retry information
+
+### Monitor Flow Runs
+```bash
+# View recent flow runs
+prefect flow-run ls
+
+# Get details of a specific run
+prefect flow-run inspect <flow-run-id>
+
+# View logs
+prefect flow-run logs <flow-run-id>
+```
+
+## 🏗️ Understanding the Training Pipeline Architecture
+
+The Prefect training pipeline (`train_flow.py`) consists of these orchestrated tasks:
+
+1. **Load and Preprocess Data** (with retry logic)
+   - Reads CSV file
+   - Converts columns to snake_case
+   - Calculates age from rings
+   - Removes IQR outliers
+   - One-hot encodes the 'sex' column
+
+2. **Prepare Features and Target**
+   - Separates features (X) from target (y = rings)
+
+3. **Split Train Test**
+   - Creates 80/20 train-test split with reproducible random seed
+
+4. **Build Pipeline**
+   - Creates sklearn ColumnTransformer for numeric scaling
+   - Passes through one-hot encoded sex columns
+   - Wraps preprocessing + LinearRegression in Pipeline
+
+5. **Train Model**
+   - Fits the complete pipeline on training data
+
+6. **Evaluate Model**
+   - Calculates MAE, MSE, and R² metrics on test set
+
+7. **Save Model**
+   - Pickles the trained pipeline to `src/web_service/local_objects/model.pkl`
+
+### Key Benefits of the Prefect Implementation
+
+- ✅ **Observability**: See exactly which tasks succeeded/failed and why
+- ✅ **Retry Logic**: Automatically retry data loading if it fails (network issues, etc.)
+- ✅ **Scheduling**: Automated weekly retraining without manual intervention
+- ✅ **Logging**: Centralized, structured logs for all tasks
+- ✅ **Parameterization**: Easy to change test_size, random_state, or paths
+- ✅ **Monitoring**: Track model performance metrics over time in the UI
+- ✅ **Reproducibility**: All parameters and results are logged for each run
