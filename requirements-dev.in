@@ -1,2 +1,7 @@
 # TODO - complete with dev requirements (black, flake8, ruff, etc...)
 # Then, execute "pip-compile requirements-dev.in" to generate the file requirements-dev.txt
+scikit-learn==1.3.1
+pandas==2.1.1
+uvicorn==0.23.2
+fastapi==0.103.2
+loguru==0.7.2
