@@ -88,8 +88,8 @@ curl -X POST http://localhost:8080/predict_all
 
 
 ### 🐳 Part 2: Run the Project with Docker
-```
-bash
+
+```bash
 # 1. Build the Docker image
 docker build -t mlops-api -f Dockerfile.app .
 
