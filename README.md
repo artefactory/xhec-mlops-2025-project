@@ -5,13 +5,79 @@
 [![Python Version](https://img.shields.io/badge/python-3.10%20or%203.11-blue.svg)]()
 [![Linting: ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-informational?logo=pre-commit&logoColor=white)](https://github.com/artefactory/xhec-mlops-project-student/blob/main/.pre-commit-config.yaml)
+
+**A complete MLOps pipeline for predicting abalone age using physical measurements**
+
+[Overview](#-project-overview) •
+[Quick Start](#-quick-start) •
+[Dataset](#-about-the-dataset) •
+[Pipeline](#-project-pipeline) •
+[Documentation](#-detailed-documentation)
+
 </div>
+
+---
 
 ## 🎯 Project Overview
 
-Welcome to your MLOps project! In this hands-on project, you'll build a complete machine learning system to predict the age of abalone (a type of sea snail) using physical measurements instead of the traditional time-consuming method of counting shell rings under a microscope.
+This project demonstrates a complete MLOps workflow for predicting the age of abalone (a type of sea snail) using physical measurements. Instead of the traditional time-consuming method of counting shell rings under a microscope, we use machine learning to predict age from easily measurable features.
 
-**Our Mission**: Transform a simple ML model into a production-ready system with automated training, deployment, and prediction capabilities.
+**Key Features:**
+- 📊 Comprehensive exploratory data analysis
+- 🤖 Automated ML training pipeline with Prefect
+- 🔄 Scheduled model retraining
+- 🚀 FastAPI-based prediction service
+- 🐳 Fully containerized with Docker
+- 📈 Experiment tracking with MLflow
+- ✅ CI/CD with linting and formatting
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.10 or 3.11
+- Docker (for containerized deployment)
+- Dataset from [Kaggle](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
+
+### Installation
+
+1. **Clone the repository and set up environment:**
+```bash
+git clone <repository-url>
+cd xhec-mlops-project
+uv sync
+source .venv/bin/activate
+```
+
+2. **Install pre-commit hooks:**
+```bash
+pre-commit install
+pre-commit run --all-files
+```
+
+3. **Download the dataset:**
+   - Get the dataset from [Kaggle](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
+   - Place `abalone.csv` in the `data/` directory
+
+### Run the Complete Pipeline
+
+```bash
+# 1. Explore the data (optional)
+jupyter notebook notebooks/eda.ipynb
+
+# 2. Train the model
+python src/modelling/train_flow.py data/abalone.csv
+
+# 3. Start the API locally
+uvicorn src.web_service.main:app --reload --port 8080
+
+# 4. Test predictions
+curl -X POST http://localhost:8080/predict_all
+```
+
+---
 
 ## 📊 About the Dataset
 
@@ -20,396 +86,419 @@ Traditionally, determining an abalone's age requires:
 2. Staining it
 3. Counting rings under a microscope (very time-consuming!)
 
-**Our Goal**: Use easier-to-obtain physical measurements (shell weight, diameter, etc.) to predict the age automatically.
+**Our Goal**: Use easier-to-obtain physical measurements to predict age automatically.
 
-📥 **Dataset Download**: Get the dataset from the [Kaggle page](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
+### Dataset Details
 
-PR_0:
+- **Samples**: 4,177 abalone
+- **Features**: 8 physical measurements + 1 categorical (sex)
+- **Target**: Number of rings (age ≈ rings + 1.5 years)
 
-## 🛠 Development Setup
+**Features:**
+- `Sex`: M (Male), F (Female), I (Infant)
+- `Length`: Longest shell measurement (mm)
+- `Diameter`: Perpendicular to length (mm)
+- `Height`: Height with meat in shell (mm)
+- `Whole weight`: Entire abalone weight (grams)
+- `Shucked weight`: Weight of meat (grams)
+- `Viscera weight`: Gut weight after bleeding (grams)
+- `Shell weight`: Weight after being dried (grams)
+- `Rings`: Age indicator (+1.5 = age in years)
 
-To set up your environment:
+---
 
+## 🏗️ Project Pipeline
+
+This project follows a complete MLOps workflow:
+
+```
+1. Data Exploration (EDA) → 2. Preprocessing → 3. Model Training → 4. API Deployment
+        ↓                         ↓                    ↓                    ↓
+   notebooks/              src/modelling/        Prefect + MLflow      FastAPI + Docker
+```
+
+### Architecture Overview
+
+```
+├── data/                          # Raw and processed datasets
+├── notebooks/                     # Exploratory analysis
+│   ├── eda.ipynb                 # Data exploration
+│   └── model.ipynb               # Initial modeling
+├── src/
+│   ├── modelling/                # Training pipeline
+│   │   ├── train_flow.py         # Prefect orchestrated training
+│   │   ├── preprocessing.py      # Data preprocessing
+│   │   ├── training.py           # Model training logic
+│   │   └── predicting.py         # Inference utilities
+│   └── web_service/              # API service
+│       ├── main.py               # FastAPI application
+│       ├── lib/models.py         # Pydantic models
+│       └── local_objects/        # Saved models
+├── bin/
+│   └── run_services.sh           # Deployment automation
+└── Dockerfile.app                # Docker configuration
+```
+
+---
+
+## 📖 Detailed Documentation
+
+### Stage 1: Exploratory Data Analysis
+
+**Location**: `notebooks/`
+
+Comprehensive exploration revealing:
+- **Data Quality**: No missing values, no duplicates, balanced sex distribution
+- **Distributions**: Right-skewed for weights, normally distributed for dimensions
+- **Correlations**: Shell weight (0.63), diameter (0.58), and length (0.56) best predict age
+- **Insights**: Moderate R² (~0.55) indicates physical measurements capture ~55% of age variance
+
+**Key Findings:**
+- 164 outliers removed using IQR method
+- High multicollinearity among size features (0.90-0.99)
+- Infants significantly smaller and younger than adults
+
+**Run EDA:**
 ```bash
-uv sync
-source .venv/bin/activate
-pre-commit install
-pre-commit run --all-files
-```
-
-This project uses:
-
-- Ruff for linting and formatting
-
-- Pre-commit for code quality checks
-
-- Prefect for pipeline orchestration
-
-- FastAPI for serving predictions
-
-PR_1:
-
-# Exploratory Data Analysis & Modeling
-
-This part contains Jupyter notebooks for exploring the Abalone dataset and building predictive models to estimate the age of abalone based on physical measurements.
-
-## Overview
-
-The Abalone dataset contains physical measurements of abalone (a type of sea snail) used to predict their age. Age is determined by counting the number of rings on the shell, which corresponds to approximately one year of growth after the first 1.5 years of life.
-
-**Target Variable**: `rings` (number of rings on the shell)
-- Biological age ≈ rings + 1.5 years
-
-## Notebooks
-
-### 1. `eda.ipynb` - Exploratory Data Analysis
-
-Comprehensive exploration of the Abalone dataset including:
-
-- **Data Quality Checks**
-  - 4,177 samples with 9 features
-  - No missing values
-  - No duplicates
-
-- **Feature Analysis**
-  - **Categorical**: Sex (M/F/I - Male/Female/Infant)
-  - **Numerical**: Length, Diameter, Height, Whole Weight, Shucked Weight, Viscera Weight, Shell Weight
-  - **Target**: Rings (1-29, median=9, mean≈10)
-
-- **Key Findings**
-  - Right-skewed distributions for most features (especially weights)
-  - Moderate correlation between size/weight and age (0.42-0.63)
-  - High multicollinearity among size features (0.90-0.99)
-  - Sex-based differences: Infants are smaller and younger
-  - Outliers detected and removed using IQR method (164 rows removed)
-
-- **Data Outputs**
-  - Clean dataset saved to `../data/abalone_clean.csv`
-
-### 2. `model.ipynb` - Linear Regression Modeling
-
-Initial modeling experiments with MLflow tracking:
-
-- **Model**: Linear Regression
-- **Feature Engineering**
-  - One-hot encoding for Sex variable
-  - Comparison of scalers: StandardScaler, MinMaxScaler, RobustScaler, None
-
-- **Experiments**
-  - Multiple train/test splits (80/20, 70/30)
-  - MLflow tracking for reproducibility
-  - Experiment name: `Abalone_Age_Prediction_Multiple_Runs`
-
-- **Performance**
-  - MAE: ~1.54-1.55 rings
-  - MSE: ~4.46-4.53
-  - R²: ~0.54-0.55
-  - Scaling method had minimal impact on Linear Regression performance
-
-## Getting Started
-
-### Running the Notebooks
-
-1. **EDA First**: Run `eda.ipynb` to generate the cleaned dataset
-2. **Modeling**: Run `model.ipynb` to train models and log experiments
-
-### Data Location
-
-- Raw data: `../data/abalone.csv`
-- Cleaned data: `../data/abalone_clean.csv` (generated by EDA notebook)
-
-### MLflow Tracking
-
-Model experiments are logged to `mlruns/` directory. To view the MLflow UI:
-```bash
-mlflow ui
-```
-
-Then navigate to `http://localhost:5000` in your browser.
-
-## Key Insights
-
-1. **Age Prediction Complexity**: The moderate R² (~0.55) suggests that physical measurements alone capture only part of the age variance. Environmental factors and genetics likely play important roles.
-
-2. **Feature Importance**: Shell weight shows the strongest correlation with age (0.63), followed by diameter (0.58) and length (0.56).
-
-3. **Data Quality**: The dataset is clean with balanced sex distribution, making it suitable for modeling without extensive preprocessing.
-
-4. **Outlier Impact**: Removing outliers improved data quality by eliminating extreme measurements that could skew model training.
-
-## Next Steps
-
-Potential improvements for future iterations:
-
-- Try non-linear models (Random Forest, XGBoost, Neural Networks)
-- Feature engineering (ratios, polynomial features)
-- Handle multicollinearity (PCA, feature selection)
-- Cross-validation for more robust evaluation
-- Ensemble methods
-- Hyperparameter tuning
-
-## File Structure
-```
-notebooks/
-├── eda.ipynb                  # Exploratory Data Analysis
-├── model.ipynb                # Linear Regression modeling
-├── mlruns/                    # MLflow experiment tracking
-└── README.md                  # This file
-```
-
-## References
-
-- Dataset: UCI Machine Learning Repository - Abalone Dataset
-- Features measured in standardized units (likely millimeters for length/diameter/height, grams for weights)
-
-PR_2:
-
-⚙️ Data Preprocessing, Feature Engineering & Model Training
-
-This stage focuses on preparing the Abalone dataset for machine learning, engineering meaningful features, and training baseline models with consistent preprocessing.
-
-The implementation introduces structured preprocessing pipelines and improves experiment reproducibility and efficiency.
-
-🧹 Data Preprocessing
-
-Data preparation is implemented in Python scripts under src/modelling/.
-The key preprocessing steps include:
-
-Column Standardization
-
-Convert column names to snake_case
-
-Ensure consistent naming conventions across scripts
-
-Target Variable Transformation
-
-Age = rings + 1.5 (biological approximation)
-
-Target remains as rings for modeling simplicity
-
-Outlier Removal
-
-Outliers in numeric columns are removed using the IQR (Interquartile Range) method
-
-This step improves model robustness
-
-Encoding
-
-One-hot encoding applied to the categorical feature sex
-
-Produces columns: sex_F, sex_I, sex_M
-
-Feature Scaling
-
-Numeric columns scaled with StandardScaler
-
-Ensures that all features contribute equally to model training
-
-🧩 Feature Engineering
-
-Derived features include:
-
-Ratios such as shell_weight / whole_weight
-
-Log transformations for skewed distributions
-
-Engineered features improve correlations with rings and model performance
-
-Redundant or highly correlated features (multicollinearity) are monitored and addressed during modeling
-
-🤖 Model Training Pipeline
-
-Training logic is implemented in:
-
-src/modelling/main.py
-
-The script handles:
-
-Data loading and preprocessing
-
-Train-test split (default 80/20)
-
-Building a scikit-learn Pipeline
-
-Fitting a Linear Regression model
-
-Evaluating model performance using MAE, MSE, and R²
-
-All transformations are applied consistently across training and test data via the pipeline.
-
-📈 Model Evaluation Results
-Metric   Result (Linear Regression) Interpretation
-MAE   ~1.55 rings Average prediction error
-MSE   ~4.5  Variance of prediction errors
-R² ~0.55 Model explains ~55% of target variance
-
-✅ The baseline model provides a solid foundation for later improvements using non-linear models.
-
-🧪 Experiment Tracking with MLflow
-
-Each model training run is logged with MLflow for reproducibility.
-
-To launch MLflow UI and inspect results:
-
-mlflow ui
-
-Then open: http://localhost:5000
-
-Tracked parameters include:
-
-Model type
-
-Data split ratio
-
-Scaling method
-
-Evaluation metrics (MAE, MSE, R²)
-
-▶️ How to Run This Stage
-Option 1: Run the training script manually
-python src/modelling/main.py data/abalone.csv
-
-Option 2: Run notebooks (EDA & Model)
 jupyter notebook notebooks/eda.ipynb
-jupyter notebook notebooks/model.ipynb
+```
 
-Option 3: View experiment results in MLflow
+**View MLflow experiments:**
+```bash
+cd notebooks
 mlflow ui
+# Navigate to http://localhost:5000
+```
 
-Then open your browser at http://localhost:5000
+### Stage 2: Data Preprocessing & Feature Engineering
 
-🧠 Insights
+**Location**: `src/modelling/`
 
- - Linear models provide moderate predictive power — physical measurements explain only part of age variability
+**Preprocessing Steps:**
+1. Column standardization to snake_case
+2. Outlier removal using IQR method (1.5 × IQR)
+3. One-hot encoding for `sex` (drop_first=True)
+4. Feature scaling with StandardScaler
+5. Pipeline creation for consistent transformations
 
- - Shell-related features are the most predictive
+**Model Performance (Linear Regression):**
+- **MAE**: ~1.54-1.55 rings
+- **MSE**: ~4.46-4.53
+- **R²**: ~0.54-0.55
 
- - Scaling and one-hot encoding improve model stability
+**Train manually:**
+```bash
+python src/modelling/main.py data/abalone.csv
+```
 
- - The pipeline ensures reproducibility and consistent preprocessing
+### Stage 3: Automated Training with Prefect
 
-🚀 Next Steps
+**Location**: `src/modelling/train_flow.py`, `src/modelling/deploy.py`
 
- - Integrate with Prefect for automated pipeline orchestration (see PR_3)
+The Prefect pipeline orchestrates:
+1. ✅ Load and preprocess data (with retry logic)
+2. ✅ Feature-target separation
+3. ✅ Train-test split (80/20)
+4. ✅ Pipeline building (ColumnTransformer + LinearRegression)
+5. ✅ Model training
+6. ✅ Evaluation (MAE, MSE, R²)
+7. ✅ Model persistence (pickle)
 
- - Add non-linear models like Random Forest, XGBoost, and CatBoost
+#### Option 1: One-Time Training
 
- - Introduce feature selection and cross-validation
-
- - Automate retraining and monitoring workflows
-
-PR_3:
-
-## 🔄 Training Pipeline with Prefect
-
-### Option 1: Run Training Flow Directly (One-Time)
-
-**Using the new Prefect flow:**
 ```bash
 python src/modelling/train_flow.py data/abalone_clean.csv
 ```
 
-### Option 2: Automated Retraining with Prefect Deployment
+#### Option 2: Scheduled Retraining
 
-#### Start Prefect Server
-
-In a **separate terminal**, start the Prefect server (in "src" folder):
+**Terminal 1 - Start Prefect Server:**
 ```bash
+cd src
 prefect server start
+# UI available at http://127.0.0.1:4200
 ```
 
-The Prefect UI will be available at: **http://127.0.0.1:4200**
-
-#### Create and Run the Deployment
-
-In another terminal, activate your virtual environment and run:
+**Terminal 2 - Create Deployment:**
 ```bash
 python src/modelling/deploy.py
+# Keep this running to maintain the deployment
 ```
 
-This will:
-- ✅ Create a deployment named "abalone-weekly-retraining"
-- ✅ Schedule it to run **every Sunday at 2:00 AM**
-- ✅ Keep the deployment server running (leave this terminal open)
+**Deployment Details:**
+- **Name**: `abalone-weekly-retraining`
+- **Schedule**: Every Sunday at 2:00 AM
+- **Trigger manually**:
+  ```bash
+  prefect deployment run 'Train Abalone Age Prediction Model/abalone-weekly-retraining'
+  ```
 
-**Note:** Keep this terminal running to maintain the deployment. Press `Ctrl+C` to stop.
+**Monitor in Prefect UI:**
+- **Flows**: View all registered flows
+- **Flow Runs**: Execution history with detailed logs
+- **Deployments**: Manage scheduled runs
+- **Task Timeline**: DAG visualization
 
-#### Manually Trigger a Deployment Run
+**Benefits:**
+- 🔍 Complete observability of each pipeline step
+- 🔄 Automatic retry logic for transient failures
+- 📅 Automated weekly retraining
+- 📊 Centralized metrics tracking
+- 📝 Structured logging
 
-You can trigger the deployment without waiting for the schedule:
+### Stage 4: API Deployment with FastAPI
+
+**Location**: `src/web_service/`
+
+#### API Endpoints
+
+**`GET /`** - Health Check
 ```bash
-# List all deployments
-prefect deployment ls
-
-# Trigger the deployment
-prefect deployment run 'Train Abalone Age Prediction Model/abalone-weekly-retraining'
+curl http://localhost:8080/
+# Response: {"health_check": "App up and running!"}
 ```
 
-### Visualize Flows in Prefect UI
-
-1. Open **http://127.0.0.1:4200** in your browser
-2. Navigate to:
-   - **Flows** → See all registered flows
-   - **Flow Runs** → View execution history with detailed logs
-   - **Deployments** → Manage scheduled runs
-   - **Work Pools & Workers** → Monitor deployment infrastructure
-
-3. Click on any flow run to see:
-   - 📊 Task execution timeline and DAG visualization
-   - 📝 Detailed logs for each task
-   - ⚙️ Input parameters and output results
-   - 📈 Performance metrics (MAE, MSE, R²)
-   - ⏱️ Task duration and retry information
-
-### Monitor Flow Runs
+**`POST /predict_all`** - Batch Predictions
 ```bash
-# View recent flow runs
-prefect flow-run ls
+curl -X POST http://localhost:8080/predict_all
+# Response: {"predictions": [10.5, 8.2, 12.1, ...]}
+```
 
-# Get details of a specific run
-prefect flow-run inspect <flow-run-id>
+#### Local Development
+
+**1. Configure paths in `src/web_service/utils.py`:**
+```python
+class Paths:
+    path_data = "data/abalone_clean.csv"
+    path_model = "src/web_service/local_objects/model.pkl"
+```
+
+**2. Start the API:**
+```bash
+uvicorn src.web_service.main:app --reload --port 8080
+```
+
+**3. Access documentation:**
+- Interactive docs: http://localhost:8080/docs
+- Alternative docs: http://localhost:8080/redoc
+- OpenAPI schema: http://localhost:8080/openapi.json
+
+**4. Test with Python:**
+```python
+import requests
+
+# Health check
+response = requests.get("http://localhost:8080/")
+print(response.json())
+
+# Make predictions
+response = requests.post("http://localhost:8080/predict_all")
+print(response.json()["predictions"])
+```
+
+#### Docker Deployment
+
+**1. Build the image:**
+```bash
+docker build -t mlops-api -f Dockerfile.app .
+```
+
+**2. Run the container:**
+```bash
+docker run -d -p 0.0.0.0:8000:8080 mlops-api
+```
+
+**3. Access the API:**
+- Base URL: http://localhost:8000
+- Interactive docs: http://localhost:8000/docs
+
+**4. Manage containers:**
+```bash
+# List running containers
+docker ps
 
 # View logs
-prefect flow-run logs <flow-run-id>
+docker logs <container_id>
+
+# Stop container
+docker stop <container_id>
+
+# Remove container
+docker rm <container_id>
 ```
 
-## 🏗️ Understanding the Training Pipeline Architecture
+**Automated deployment:**
+```bash
+chmod +x bin/run_services.sh
+./bin/run_services.sh
+```
 
-The Prefect training pipeline (`train_flow.py`) consists of these orchestrated tasks:
+---
 
-1. **Load and Preprocess Data** (with retry logic)
-   - Reads CSV file
-   - Converts columns to snake_case
-   - Calculates age from rings
-   - Removes IQR outliers
-   - One-hot encodes the 'sex' column
+## 🛠️ Development Tools
 
-2. **Prepare Features and Target**
-   - Separates features (X) from target (y = rings)
+### Code Quality
 
-3. **Split Train Test**
-   - Creates 80/20 train-test split with reproducible random seed
+This project uses:
+- **Ruff**: Fast Python linter and formatter
+- **Pre-commit**: Automated code quality checks before commits
+- **Type hints**: For better code documentation
 
-4. **Build Pipeline**
-   - Creates sklearn ColumnTransformer for numeric scaling
-   - Passes through one-hot encoded sex columns
-   - Wraps preprocessing + LinearRegression in Pipeline
+```bash
+# Run linting
+ruff check .
 
-5. **Train Model**
-   - Fits the complete pipeline on training data
+# Run formatting
+ruff format .
 
-6. **Evaluate Model**
-   - Calculates MAE, MSE, and R² metrics on test set
+# Run all pre-commit hooks
+pre-commit run --all-files
+```
 
-7. **Save Model**
-   - Pickles the trained pipeline to `src/web_service/local_objects/model.pkl`
+### Experiment Tracking
 
-### Key Benefits of the Prefect Implementation
+**MLflow** tracks all model experiments:
+```bash
+mlflow ui
+# Navigate to http://localhost:5000
+```
 
-- ✅ **Observability**: See exactly which tasks succeeded/failed and why
-- ✅ **Retry Logic**: Automatically retry data loading if it fails (network issues, etc.)
-- ✅ **Scheduling**: Automated weekly retraining without manual intervention
-- ✅ **Logging**: Centralized, structured logs for all tasks
-- ✅ **Parameterization**: Easy to change test_size, random_state, or paths
-- ✅ **Monitoring**: Track model performance metrics over time in the UI
-- ✅ **Reproducibility**: All parameters and results are logged for each run
+**Tracked information:**
+- Model parameters (scaler, test_size, random_state)
+- Metrics (MAE, MSE, R²)
+- Model artifacts
+- Feature coefficients
+
+---
+
+## 📊 Model Performance
+
+### Current Baseline (Linear Regression)
+
+| Metric | Value | Interpretation |
+|--------|-------|----------------|
+| **MAE** | ~1.55 rings | Average prediction error |
+| **MSE** | ~4.5 | Variance of errors |
+| **R²** | ~0.55 | Explains 55% of age variance |
+
+### Feature Importance (Correlation with Rings)
+
+1. **Shell weight**: 0.628 (strongest)
+2. **Diameter**: 0.575
+3. **Length**: 0.557
+4. **Height**: 0.557
+5. **Whole weight**: 0.540
+
+### Key Insights
+
+- Physical measurements capture moderate predictive power
+- Environmental factors and genetics likely contribute to remaining variance
+- High multicollinearity among size features suggests dimensionality reduction could help
+- Non-linear models may capture additional patterns
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Issue**: Module not found errors
+```bash
+# Solution: Ensure you're in the project root
+cd /path/to/xhec-mlops-project
+source .venv/bin/activate
+```
+
+**Issue**: Port already in use
+```bash
+# Solution: Find and kill the process
+lsof -i :8080
+kill -9 <PID>
+```
+
+**Issue**: Model file not found
+```bash
+# Solution: Train the model first
+python src/modelling/train_flow.py data/abalone.csv
+```
+
+**Issue**: Docker container exits immediately
+```bash
+# Solution: Check logs for errors
+docker logs <container_id>
+```
+
+**Issue**: Predictions fail with shape errors
+```bash
+# Solution: Ensure preprocessing matches training data
+# Check that src/web_service/utils.py points to abalone_clean.csv
+```
+
+---
+
+## 🚀 Next Steps & Future Enhancements
+
+### Model Improvements
+- [ ] Try non-linear models (Random Forest, XGBoost, Neural Networks)
+- [ ] Feature engineering (ratios, polynomial features)
+- [ ] Handle multicollinearity (PCA, feature selection)
+- [ ] Cross-validation for robust evaluation
+- [ ] Hyperparameter tuning with Optuna
+
+### API Enhancements
+- [ ] Single prediction endpoint with JSON input
+- [ ] File upload for batch predictions
+- [ ] Model versioning and A/B testing
+- [ ] Caching for frequent predictions
+- [ ] Prometheus metrics endpoint
+- [ ] Authentication (API keys, OAuth2)
+- [ ] Rate limiting
+
+### Infrastructure
+- [ ] Kubernetes deployment
+- [ ] CI/CD pipeline with GitHub Actions
+- [ ] Automated testing suite
+- [ ] Load testing and performance optimization
+- [ ] Monitoring and alerting
+
+### MLOps
+- [ ] MLflow model registry integration
+- [ ] Data drift detection
+- [ ] Model performance monitoring
+- [ ] Automated model rollback
+- [ ] Feature store integration
+
+---
+
+## 📚 Additional Resources
+
+- **Dataset Source**: [UCI Machine Learning Repository - Abalone Dataset](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
+- **Prefect Documentation**: https://docs.prefect.io
+- **FastAPI Documentation**: https://fastapi.tiangolo.com
+- **MLflow Documentation**: https://mlflow.org/docs/latest/index.html
+- **Docker Documentation**: https://docs.docker.com
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
+
+---
+
+## 📄 License
+
+This project is part of the X-HEC MLOps course.
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the X-HEC MLOps Course**
+
+</div>
