@@ -1,0 +1,81 @@
+services:
+  # FastAPI Backend
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "8000:8000"
+    environment:
+      - PREFECT_API_URL=http://prefect:4200/api
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      - prefect
+      - mlflow
+    volumes:
+      - ./data:/app/data
+      - ./src/web_service/local_objects:/app/src/web_service/local_objects
+    networks:
+      - mlops-network
+
+  # Streamlit Frontend
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    ports:
+      - "8501:8501"
+    environment:
+      - API_BASE_URL=http://api:8000
+    depends_on:
+      - api
+    networks:
+      - mlops-network
+
+  # Prefect Server
+  prefect:
+    image: python:3.10-slim
+    ports:
+      - "4200:4200"
+    environment:
+      - PREFECT_API_URL=http://prefect:4200/api
+    command: >
+      bash -c "
+      pip install prefect &&
+      prefect server start --host 0.0.0.0
+      "
+    volumes:
+      - prefect_data:/root/.prefect
+    networks:
+      - mlops-network
+
+  # MLflow Server
+  mlflow:
+    image: python:3.10-slim
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=sqlite:///mlflow.db
+      - MLFLOW_DEFAULT_ARTIFACT_ROOT=/mlflow/artifacts
+    command: >
+      bash -c "
+      pip install mlflow &&
+      mkdir -p /mlflow/artifacts &&
+      mlflow server 
+        --backend-store-uri sqlite:///mlflow.db 
+        --default-artifact-root /mlflow/artifacts 
+        --host 0.0.0.0 
+        --port 5000
+      "
+    volumes:
+      - mlflow_data:/mlflow
+    networks:
+      - mlops-network
+
+volumes:
+  prefect_data:
+  mlflow_data:
+
+networks:
+  mlops-network:
+    driver: bridge
