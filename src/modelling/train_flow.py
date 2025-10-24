@@ -40,7 +40,7 @@ def prepare_features_target(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]:
     Returns:
         Tuple of (X, y)
     """
-    X = df.drop(columns=["rings", "age"])
+    X = df.drop(columns=["rings"])
     y = df["rings"]
     return X, y
 
