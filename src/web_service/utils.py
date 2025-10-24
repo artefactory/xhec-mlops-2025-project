@@ -1,5 +1,3 @@
-# No need to reload models and data, already being loaded in helper functions
-
 from pathlib import Path
 
 

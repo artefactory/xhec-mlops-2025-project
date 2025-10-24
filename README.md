@@ -61,9 +61,16 @@ pre-commit run --all-files
    - Get the dataset from [Kaggle](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
    - Place `abalone.csv` in the `data/` directory
 
-### Run the Complete Pipeline
+💬 First, verify everything works locally in your environment.  
+Then, run the same API inside Docker for deployment testing.
 
-```bash
+---
+
+### 🚀 Part 1: Run the Complete Pipeline Locally
+
+For development or debugging.
+
+bash
 # 1. Explore the data (optional)
 jupyter notebook notebooks/eda.ipynb
 
@@ -75,7 +82,24 @@ uvicorn src.web_service.main:app --reload --port 8080
 
 # 4. Test predictions
 curl -X POST http://localhost:8080/predict_all
-```
+
+
+
+### 🐳 Part 2: Run the Project with Docker
+
+bash
+# 1. Build the Docker image
+docker build -t mlops-api -f Dockerfile.app .
+
+# 2. Run the container
+docker run -dp 0.0.0.0:8000:8080 mlops-api
+
+# 3. Access the API
+http://localhost:8000/docs
+
+# 4. Test predictions again
+curl -X POST http://localhost:8000/predict_all
+
 
 ---
 
