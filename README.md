@@ -57,7 +57,7 @@ pre-commit install
 pre-commit run --all-files
 ```
 
-3. **Download the dataset:**
+3. **Download the dataset if not already available:**
    - Get the dataset from [Kaggle](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)
    - Place `abalone.csv` in the `data/` directory
 
@@ -84,6 +84,11 @@ uvicorn src.web_service.main:app --reload --port 8080
 
 # 4. Test predictions
 curl -X POST http://localhost:8080/predict_all
+
+# 5. Test predictions with streamlit (optional)
+uvicorn src.web_service.main:app --reload --port 8080
+# In a different terminal now, in parallele, run:
+streamlit run src/web_service/streamlit.py 
 ```
 
 
@@ -325,6 +330,14 @@ print(response.json())
 response = requests.post("http://localhost:8080/predict_all")
 print(response.json()["predictions"])
 ```
+
+**5. Test with streamlit (optional):**
+```bash
+uvicorn src.web_service.main:app --reload --port 8080
+# In parallele, run in another terminal:
+streamlit run src/web_service/streamlit.py 
+```
+
 
 #### Docker Deployment
 
