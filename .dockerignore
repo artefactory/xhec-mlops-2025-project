@@ -1,0 +1,68 @@
+# Docker ignore file for Abalone API
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation (not needed in container)
+*.md
+assets/
+
+# Notebooks (not needed in production)
+notebooks/
+
+# Development files
+requirements-dev.in
+.pre-commit-config.yaml
+
+# Test files (optional - remove if you want tests in container)
+test_*.py
+*_test.py
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
