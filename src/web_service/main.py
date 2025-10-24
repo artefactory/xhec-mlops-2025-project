@@ -27,8 +27,3 @@ def predict() -> dict:
     predictions = prediction.tolist()
 
     return {"predictions": predictions}
-
-
-# to add to readme:
-# command from root to run this : uvicorn src.web_service.main:app --reload --port 8080
-# the link gives the get response. to try the post, go to *link*/docs, and click "tri it out" in the post section. here we can also try the get, its an overview of all available apis.
