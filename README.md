@@ -105,6 +105,10 @@ curl -X POST http://localhost:8000/predict_all
 
 ---
 
+## Note
+
+Prefect server is not included in the Docker. It can be ran seperately using the instructions given below in the detailed documentation!
+
 ## 📊 About the Dataset
 
 Traditionally, determining an abalone's age requires:
@@ -503,6 +507,20 @@ docker logs <container_id>
 - **FastAPI Documentation**: https://fastapi.tiangolo.com
 - **MLflow Documentation**: https://mlflow.org/docs/latest/index.html
 - **Docker Documentation**: https://docs.docker.com
+
+---
+
+## 👥 Authors
+
+This project was developed by:
+
+| Name                     | Email                          |
+|--------------------------|--------------------------------|
+| verkrst                  | verakrstic002@gmail.com       |
+| Shay0909                 | Shaymaa.bakkass@gmail.com     |
+| nandanasreeraj123        | nandanasreeraj@gmail.com      |
+| magdalenajankowska       | magdalenaj1000@gmail.com      |
+| Sheetal-12               | sheetal.popat@hec.edu         |
 
 ---
 
