@@ -9,6 +9,7 @@ repos:
       - id: check-json
       - id: check-added-large-files
     # TODO - add ruff pre-commit hooks
+    # Remember that linting is Required and formatting highly recommended
   - repo: https://github.com/astral-sh/uv-pre-commit
     rev: 0.7.17
     hooks:
