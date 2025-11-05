@@ -92,7 +92,7 @@ For each numbered branch:
 # Switch to the branch
 git checkout branch_number_i
 
-# Get latest changes (except for branch_1)
+# Get latest changes (except for branch_0)
 git pull origin main
 # Note: A VIM window might open - just type ":wq" to close it
 
@@ -108,7 +108,7 @@ Then:
 5. ✅ Merge the pull request
 6. 🔄 Move to the next branch
 
-> **💡 Pro Tip**: Always integrate your previous work when starting a new branch (except branch_1)!
+> **💡 Pro Tip**: Always integrate your previous work when starting a new branch (except branch_0)!
 
 ### 🔍 Understanding Pull Requests
 
